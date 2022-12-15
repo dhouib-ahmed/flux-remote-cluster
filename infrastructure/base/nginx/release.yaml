@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nginx
+spec:
+  releaseName: nginx-ingress-controller
+  chart:
+    spec:
+      chart: nginx-ingress-controller
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-full-index
+        namespace: flux-system
+      version: "9.1.9"
+  interval: 1h0m0s
+  install:
+    remediation:
+      retries: 3
+  # Default values
+  # https://github.com/bitnami/charts/blob/master/bitnami/nginx-ingress-controller/values.yaml
+  values:
+    publishService:
+      enabled: true
+      pathOverride: "nginx/nginx-ingress-controller"
+    config:
+      enable-underscores-in-headers: "true"
+    replicaCount: 2
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "500Mi"
+#    ingressClassResource:    TODO: Uncomment this when we have a working ingress class
+#      default: true
