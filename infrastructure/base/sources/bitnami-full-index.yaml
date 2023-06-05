@@ -1,7 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmRepository
-metadata:
-  name: bitnami-full-index
-spec:
-  interval: 30m
-  url: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
